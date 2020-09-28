@@ -22,31 +22,31 @@ Amongst others:
 
 # Available end points
 1. Registration (which sends an email with a validation link) <br/>
-curl -X POST -d '{"version":"0.1", "application_type":"ios", "security_hash":"some_security_hash", "username":"username09281", "email":"youremail+09281@youremailprovider.com", "password":"pass123", "password2":"pass123", "language":"en"}' https://{link}/{stage}/account/register <br/>
+curl -X POST -d '{"version":"0.1", "application_type":"ios", "security_hash":"some_security_hash", "username":"username09281", "email":"youremail+09281@youremailprovider.com", "password":"pass123", "password2":"pass123", "language":"en"}' https://{link}/{stage}/account/register <br/><br/>
 {"_id":"5f716e74feb00cf7fa412b21","access":"C","created_at":1601269364,"email":"youremail+09281@youremailprovider.com","is_blocked":false,"is_email_validated":false,"language":"en","success":1,"username":"username09281"}
 
 2. Email validation link <br/>
-curl https://{link}/{stage}/account/email_validation/NWY3MTZlNzRmZWIwMGNmN2ZhNDEyYjIx_NceQP4gB?language=en <br/>
+curl https://{link}/{stage}/account/email_validation/NWY3MTZlNzRmZWIwMGNmN2ZhNDEyYjIx_NceQP4gB?language=en <br/><br/>
 Your email has been validated. You may now use your account to login to ACloudApp.org.
 
 3. Login <br/>
-curl -X POST -d '{"version":"0.1", "application_type":"ios", "security_hash":"some_security_hash", "username":"username09281", "email":"youremail+09281@youremailprovider.com", "password":"pass123"}' https://{link}/{stage}/account/login <br/>
+curl -X POST -d '{"version":"0.1", "application_type":"ios", "security_hash":"some_security_hash", "username":"username09281", "email":"youremail+09281@youremailprovider.com", "password":"pass123"}' https://{link}/{stage}/account/login <br/><br/>
 {"_id":"5f723a018e030b0c088dfdc8","application_type":"ios","created_at":1601321473,"email":"youremail+09281@youremailprovider.com","expiry":1601753473,"is_valid":true,"jwt_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDE3NTM0NzMsImxvZ2luX2xvZ19pZCI6IjVmNzIzYTAxOGUwMzBiMGMwODhkZmRjOCIsInVzZXJfaWQiOiI1ZjcxNmU3NGZlYjAwY2Y3ZmE0MTJiMjEifQ.qNW8w3BomY2gzwx5dn0syOOvGYfBUsy5U9fNpqhVaas","login_count":1,"secret":"gBG0FuwR","success":1,"user_id":"5f716e74feb00cf7fa412b21","username":"username09281","version":"0.1"}
 
 4. Is Logged in check <br/>
-curl https://{link}/{stage}/account/is_logged_in -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDE3NTM0NzMsImxvZ2luX2xvZ19pZCI6IjVmNzIzYTAxOGUwMzBiMGMwODhkZmRjOCIsInVzZXJfaWQiOiI1ZjcxNmU3NGZlYjAwY2Y3ZmE0MTJiMjEifQ.qNW8w3BomY2gzwx5dn0syOOvGYfBUsy5U9fNpqhVaas" <br/>
+curl https://{link}/{stage}/account/is_logged_in -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDE3NTM0NzMsImxvZ2luX2xvZ19pZCI6IjVmNzIzYTAxOGUwMzBiMGMwODhkZmRjOCIsInVzZXJfaWQiOiI1ZjcxNmU3NGZlYjAwY2Y3ZmE0MTJiMjEifQ.qNW8w3BomY2gzwx5dn0syOOvGYfBUsy5U9fNpqhVaas" <br/><br/>
 {"expiry":1601753473,"success":1}
 
 5. Logout <br/>
-curl -X POST -d '{"version":"0.1", "application_type":"ios", "security_hash":"some_security_hash"}' https://{link}/{stage}/account/logout -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDE3NTM0NzMsImxvZ2luX2xvZ19pZCI6IjVmNzIzYTAxOGUwMzBiMGMwODhkZmRjOCIsInVzZXJfaWQiOiI1ZjcxNmU3NGZlYjAwY2Y3ZmE0MTJiMjEifQ.qNW8w3BomY2gzwx5dn0syOOvGYfBUsy5U9fNpqhVaas" <br/>
+curl -X POST -d '{"version":"0.1", "application_type":"ios", "security_hash":"some_security_hash"}' https://{link}/{stage}/account/logout -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDE3NTM0NzMsImxvZ2luX2xvZ19pZCI6IjVmNzIzYTAxOGUwMzBiMGMwODhkZmRjOCIsInVzZXJfaWQiOiI1ZjcxNmU3NGZlYjAwY2Y3ZmE0MTJiMjEifQ.qNW8w3BomY2gzwx5dn0syOOvGYfBUsy5U9fNpqhVaas" <br/><br/>
 {"success":1}
 
 6. Resend email validation (which sends an email with a validation link) <br/>
-curl -X POST -d '{"version":"0.1", "application_type":"ios", "security_hash":"some_security_hash", "username":"username09281", "email":"youremail+09281@youremailprovider.com"}' https://{link}/{stage}/account/resend_email_validation <br/>
+curl -X POST -d '{"version":"0.1", "application_type":"ios", "security_hash":"some_security_hash", "username":"username09281", "email":"youremail+09281@youremailprovider.com"}' https://{link}/{stage}/account/resend_email_validation <br/><br/>
 {"message_key":"EMAIL_VALIDATION_RESEND_SUCCESS","success":1}
 
 7. Forgot password (which sends an email with a temporary password) <br/>
-curl -X POST -d '{"version":"0.1", "application_type":"ios", "security_hash":"some_security_hash", "username":"username09281", "email":"youremail+09281@youremailprovider.com"}' https://{link}/{stage}/account/forgot_password <br/>
+curl -X POST -d '{"version":"0.1", "application_type":"ios", "security_hash":"some_security_hash", "username":"username09281", "email":"youremail+09281@youremailprovider.com"}' https://{link}/{stage}/account/forgot_password <br/><br/>
 {"message_key":"FORGOT_PASSWORD_SUCCESS","success":1}
 
 # Future feature targets
