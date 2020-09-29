@@ -1,0 +1,25 @@
+service: ACA-n-test # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: api # we attach the stage ie dev or prod in the path
+  region: us-east-1
+
+package:
+  exclude:
+    - ./**
+    - ../../../../../../node.js/databases/mongodb/providers/openwhisk
+  include:
+    - ../../../../../../node.js/**
+
+functions:
+  test_test:
+    handler: ./node.js/databases/mongodb/providers/aws/test/test.test # relative to root of package
+    events:
+      - http:
+          path: dev/test/test
+          method: get
+      - http:
+          path: prod/test/test
+          method: get

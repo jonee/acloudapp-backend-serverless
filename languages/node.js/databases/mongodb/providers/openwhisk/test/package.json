@@ -1,0 +1,14 @@
+{
+  "name": "test",
+  "version": "0.1.0",
+  "description": "",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.5",
+    "serverless-openwhisk": ">=0.13.0",
+    "validator": "^13.1.1"
+  },
+  "author": "Jonee Ryan Ty",
+  "license": "GPLv3"
+}

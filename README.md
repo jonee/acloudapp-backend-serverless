@@ -1,6 +1,6 @@
 # acloudapp-backend-serverless
 
-A serverless backend implementation for ACloudApp- a full stack web and mobile project starter with flexible and changeable parts.  
+A serverless backend implementation for ACloudApp- a full stack web and mobile project starter with flexible and changeable parts.
 
 Currently, there are codes for Golang that saves into MongoDB and deployed into an OpenWhisk provider like IBM Cloud and / or deployed into AWS. It is also a (backend) framework for supporting other programming languages, databases and cloud providers in a serverless implementation.
 

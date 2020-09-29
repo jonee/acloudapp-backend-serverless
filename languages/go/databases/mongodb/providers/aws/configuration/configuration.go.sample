@@ -1,0 +1,12 @@
+// Created by Jonee Ryan Ty
+// Copyright ACloudApp
+
+/**
+ * (Secret) Configuration
+ */
+
+package configuration
+
+const (
+	ACCOUNT_EMAIL_VALIDATION_LINK_PREFIX = "https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/api/%%stage%%/account/email_validation/"
+)

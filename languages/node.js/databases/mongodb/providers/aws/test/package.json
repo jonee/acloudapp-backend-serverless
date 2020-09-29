@@ -1,0 +1,13 @@
+{
+  "name": "test",
+  "version": "0.1.0",
+  "description": "",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.5",
+    "validator": "^7.0.0"
+  },
+  "author": "Jonee Ryan Ty",
+  "license": "GPLv3"
+}

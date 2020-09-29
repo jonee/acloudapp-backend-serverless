@@ -1,0 +1,98 @@
+service: ACA-account # module or controller
+
+# frameworkVersion: '>=1.28.0 <2.0.0'
+
+provider:
+  name: openwhisk
+  runtime: binary
+  # stage: api # ignored by openwhisk, we attach the stage ie dev or prod in the path
+  # region: us-east-1
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./bin/**
+
+functions:
+  account_email_validation:
+    handler: bin/email_validation
+    events:
+      - http:
+          path: dev/account/email_validation/{path}
+          method: get
+          resp: http
+      - http:
+          path: prod/account/email_validation/{path}
+          method: get
+          resp: http
+  account_forgot_password:
+    handler: bin/forgot_password
+    events:
+      - http:
+          path: dev/account/forgot_password
+          method: post
+          resp: http
+      - http:
+          path: prod/account/forgot_password
+          method: post
+          resp: http
+  account_is_logged_in:
+    handler: bin/is_logged_in
+    events:
+      - http:
+          path: dev/account/is_logged_in
+          method: get
+          resp: http
+      - http:
+          path: prod/account/is_logged_in
+          method: get
+          resp: http
+  account_login:
+    handler: bin/login
+    events:
+      - http:
+          path: dev/account/login
+          method: post
+          resp: http
+      - http:
+          path: prod/account/login
+          method: post
+          resp: http
+  account_logout:
+    handler: bin/logout
+    events:
+      - http:
+          path: dev/account/logout
+          method: post
+          resp: http
+      - http:
+          path: prod/account/logout
+          method: post
+          resp: http
+  account_register:
+    handler: bin/register
+    events:
+      - http:
+          path: dev/account/register
+          method: post
+          resp: http
+      - http:
+          path: prod/account/register
+          method: post
+          resp: http
+  account_resend_email_validation:
+    handler: bin/resend_email_validation
+    events:
+      - http:
+          path: dev/account/resend_email_validation
+          method: post
+          resp: http
+      - http:
+          path: prod/account/resend_email_validation
+          method: post
+          resp: http
+
+# remember to run npm install to download the provider plugin.
+plugins:
+    - serverless-openwhisk

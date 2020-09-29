@@ -1,0 +1,31 @@
+service: ACA-n-test # NOTE: update this with your service name
+
+provider:
+  name: openwhisk
+  # runtime: nodejs
+  # stage: api # ignored by openwhisk, we attach the stage ie dev or prod in the path
+  # region: us-east-1
+
+package:
+  exclude:
+    - ./**
+    - ../../../../../../node.js/databases/mongodb/providers/aws
+  include:
+    - ../../../../../../node.js/**
+
+functions:
+  test_test:
+    handler: ../../../../../../node.js/databases/mongodb/providers/openwhisk/test/test.test
+    events:
+      - http:
+          path: dev/test/test
+          method: get
+          resp: http
+      - http:
+          path: prod/test/test
+          method: get
+          resp: http
+
+# remember to run npm install to download the provider plugin.
+plugins:
+    - serverless-openwhisk

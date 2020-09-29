@@ -1,0 +1,31 @@
+// Created by Jonee Ryan Ty
+// Copyright ACloudApp
+
+/**
+ * (Secret) Configuration
+ */
+
+package configuration
+
+var MongoConfig = map[string]map[string]interface{}{
+	"dev": map[string]interface{}{
+		"MONGODB_DATABASE":      "aca_dev",
+		"MONGODB_AUTH_DATABASE": "admin",
+		// "MONGODB_ADMIN_USER": "admin",
+		// "MONGODB_ADMIN_USER_PASSWORD": "XXXXXXXXX",
+		"MONGODB_REGULAR_USER":          "readWrite",
+		"MONGODB_REGULAR_USER_PASSWORD": "XXXXXXXX",
+		"MONGODB_CLUSTER_SRV_URI":       "cluster0-xxxxx.mongodb.net",
+		"mongoClient":                   nil,
+	},
+	"prod": map[string]interface{}{
+		"MONGODB_DATABASE":      "aca_prod",
+		"MONGODB_AUTH_DATABASE": "admin",
+		// "MONGODB_ADMIN_USER": "admin",
+		// "MONGODB_ADMIN_USER_PASSWORD": "XXXXXXXXX",
+		"MONGODB_REGULAR_USER":          "readWrite",
+		"MONGODB_REGULAR_USER_PASSWORD": "XXXXXXXX",
+		"MONGODB_CLUSTER_SRV_URI":       "cluster0-xxxxx.mongodb.net",
+		"mongoClient":                   nil,
+	},
+}

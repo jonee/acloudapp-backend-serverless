@@ -1,0 +1,8 @@
+# text file backup
+*~
+
+node_modules
+.serverless
+
+configuration.go
+configuration.js

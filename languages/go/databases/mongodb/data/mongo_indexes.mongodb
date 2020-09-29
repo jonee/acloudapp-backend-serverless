@@ -1,0 +1,211 @@
+// https://stackoverflow.com/questions/46993021/mongodb-migrate-all-existing-indexes-to-new-database
+
+db.runCommand(
+{
+	"createIndexes" : "user",
+	"indexes" : [
+		{
+			"v" : 2,
+			"unique" : true,
+			"key" : {
+				"username" : 1
+			},
+			"name" : "username_1",
+			"ns" : "aca_dev.user",
+			"background" : true,
+			"sparse" : true
+		},
+		{
+			"v" : 2,
+			"unique" : true,
+			"key" : {
+				"email" : 1
+			},
+			"name" : "email_1",
+			"ns" : "aca_dev.user",
+			"background" : true,
+			"sparse" : true
+		},
+		{
+			"v" : 2,
+			"key" : {
+				"location" : "2dsphere"
+			},
+			"name" : "location_2dsphere",
+			"ns" : "aca_dev.user",
+			"bits" : 26,
+			"2dsphereIndexVersion" : 3
+		}
+	]
+}
+)
+
+
+
+
+
+
+db.runCommand(
+{
+	"createIndexes" : "user",
+	"indexes" : [
+		{
+			"v" : 2,
+			"unique" : true,
+			"key" : {
+				"username" : 1
+			},
+			"name" : "username_1",
+			"ns" : "aca_prod.user",
+			"background" : true,
+			"sparse" : true
+		},
+		{
+			"v" : 2,
+			"unique" : true,
+			"key" : {
+				"email" : 1
+			},
+			"name" : "email_1",
+			"ns" : "aca_prod.user",
+			"background" : true,
+			"sparse" : true
+		},
+		{
+			"v" : 2,
+			"key" : {
+				"location" : "2dsphere"
+			},
+			"name" : "location_2dsphere",
+			"ns" : "aca_prod.user",
+			"bits" : 26,
+			"2dsphereIndexVersion" : 3
+		}
+	]
+}
+)
+
+
+
+
+
+
+db.runCommand(
+{
+	"createIndexes" : "login_log",
+	"indexes" : [
+		{
+			"v" : 2,
+			"key" : {
+				"user_id" : 1
+			},
+			"name" : "user_id_1",
+			"ns" : "aca_dev.login_log",
+			"background" : true,
+			"sparse" : true
+		}
+	]
+}
+)
+
+db.runCommand(
+{
+	"createIndexes" : "login_log",
+	"indexes" : [
+		{
+			"v" : 2,
+			"key" : {
+				"user_id" : 1
+			},
+			"name" : "user_id_1",
+			"ns" : "aca_prod.login_log",
+			"background" : true,
+			"sparse" : true
+		}
+	]
+}
+)
+
+// db.email_template.createIndex( { name: 1, language: 1}, { unique: true } )
+db.runCommand(
+{
+	"createIndexes" : "email_template",
+	"indexes" : [
+		{
+			"v" : 2,
+			"unique" : true,
+			"key" : {
+				"name" : 1,
+				"language" : 1
+			},
+			"name" : "name_1_language_1",
+			"ns" : "aca_dev.email_template"
+		}
+	]
+}
+)
+
+db.runCommand(
+{
+	"createIndexes" : "email_template",
+	"indexes" : [
+		{
+			"v" : 2,
+			"unique" : true,
+			"key" : {
+				"name" : 1,
+				"language" : 1
+			},
+			"name" : "name_1_language_1",
+			"ns" : "aca_prod.email_template"
+		}
+	]
+}
+)
+
+// db.translation.createIndex( { name: 1, language: 1}, { unique: true } )
+db.runCommand(
+{
+	"createIndexes" : "translation",
+	"indexes" : [
+		{
+			"v" : 2,
+			"unique" : true,
+			"key" : {
+				"name" : 1,
+				"language" : 1
+			},
+			"name" : "name_1_language_1",
+			"ns" : "aca_dev.translation"
+		}
+	]
+}
+)
+
+db.runCommand(
+{
+	"createIndexes" : "translation",
+	"indexes" : [
+		{
+			"v" : 2,
+			"unique" : true,
+			"key" : {
+				"name" : 1,
+				"language" : 1
+			},
+			"name" : "name_1_language_1",
+			"ns" : "aca_prod.translation"
+		}
+	]
+}
+)
+
+
+
+
+
+
+
+
+
+
