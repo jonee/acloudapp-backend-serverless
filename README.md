@@ -59,7 +59,8 @@ Acloudapp is envisioned to be a test bed for new features. This list would be ma
 # Documentation, installation, requirements
 In brief:
 - You should be able to run the serverless examples (https://github.com/serverless/examples) for Golang and OpenWhisk and / or Golang and AWS specially one that would interface to a MongoDB database. 
-- In the codes you should find 3 or 4 configuration.go.sample (or configuration.js.sample for the nodejs examples). Save your credentials in the files eg MongoDB, AWS access and secret keys and rename the files without the sample extension. (AWS account is also needed for AWS SES for email sending and S3 for object storage possibly in the future from among the many services). 
+- In the codes you should find 3 or 4 configuration.go.sample (or configuration.js.sample for the nodejs examples). Save your credentials in the files eg MongoDB, AWS access and secret keys and rename the files without the sample extension. (AWS account is also needed for AWS SES for email sending and S3 for object storage possibly in the future from among the many services).
+- Insert the data for mongodb
 
 # Contributing
 1. Contributors attest that their codes are free of any legal issues and that the project is shielded from any ramifications brought by the code in question.
