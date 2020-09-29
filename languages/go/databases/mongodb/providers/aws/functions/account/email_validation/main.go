@@ -52,8 +52,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	hasError, response := acaGoMongoDBAWSUtilities.DoInit(mapStore, request, false)
 	if hasError {
-		response.Headers = map[string]string{"Content-Type": "text/html"}
-		return response, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(response, "text/html"), nil
 	}
 
 	acaGoUtilities.PrintMilestone(mapStore, "do init")
@@ -75,11 +74,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	split := strings.Split(path, "_")
 	if len(split) != 2 {
-		return events.APIGatewayProxyResponse{
-			Headers:    map[string]string{"Content-Type": "text/html"},
-			StatusCode: http.StatusBadRequest,
-			Body:       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_BAD_REQUEST", nil, language),
-		}, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(
+			map[string]interface{}{
+				"statusCode": http.StatusBadRequest,
+				"body":       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_BAD_REQUEST", nil, language),
+			},
+			"text/html",
+		), nil
 	}
 
 	mongoIdString := acaGoUtilities.DecodeB64(split[0])
@@ -88,11 +89,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	mongoId, err := primitive.ObjectIDFromHex(mongoIdString)
 	// check bson ids
 	if err != nil {
-		return events.APIGatewayProxyResponse{
-			Headers:    map[string]string{"Content-Type": "text/html"},
-			StatusCode: http.StatusBadRequest,
-			Body:       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_BAD_REQUEST", nil, language),
-		}, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(
+			map[string]interface{}{
+				"statusCode": http.StatusBadRequest,
+				"body":       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_BAD_REQUEST", nil, language),
+			},
+			"text/html",
+		), nil
 	}
 
 	acaGoUtilities.PrintMilestone(mapStore, "parameters")
@@ -116,27 +119,33 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	err = userCol.FindOne(ctx, f).Decode(&userObj)
 	if err == nil { // object found
 		if userObj.ValidationSecret != validationSecret {
-			return events.APIGatewayProxyResponse{
-				Headers:    map[string]string{"Content-Type": "text/html"},
-				StatusCode: http.StatusBadRequest,
-				Body:       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_BAD_REQUEST", nil, language),
-			}, nil
+			return acaGoMongoDBAWSUtilities.DoResponse(
+				map[string]interface{}{
+					"statusCode": http.StatusBadRequest,
+					"body":       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_BAD_REQUEST", nil, language),
+				},
+				"text/html",
+			), nil
 
 		} else if userObj.IsEmailValidated {
-			return events.APIGatewayProxyResponse{
-				Headers:    map[string]string{"Content-Type": "text/html"},
-				StatusCode: http.StatusBadRequest,
-				Body:       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_USER_ALREADY_VALIDATED", nil, language),
-			}, nil
+			return acaGoMongoDBAWSUtilities.DoResponse(
+				map[string]interface{}{
+					"statusCode": http.StatusBadRequest,
+					"body":       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_USER_ALREADY_VALIDATED", nil, language),
+				},
+				"text/html",
+			), nil
 		}
 
 	} else {
 		// user not found
-		return events.APIGatewayProxyResponse{
-			Headers:    map[string]string{"Content-Type": "text/html"},
-			StatusCode: http.StatusNotFound,
-			Body:       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_USER_NOT_FOUND", nil, language),
-		}, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(
+			map[string]interface{}{
+				"statusCode": http.StatusNotFound,
+				"body":       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_USER_NOT_FOUND", nil, language),
+			},
+			"text/html",
+		), nil
 	}
 
 	acaGoUtilities.PrintMilestone(mapStore, "db search")
@@ -156,11 +165,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 		log.Println("likely database down")
 
-		return events.APIGatewayProxyResponse{
-			Headers:    map[string]string{"Content-Type": "text/html"},
-			StatusCode: http.StatusInternalServerError,
-			Body:       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_INTERNAL", nil, language),
-		}, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(
+			map[string]interface{}{
+				"statusCode": http.StatusInternalServerError,
+				"body":       acaGoMongoDBUtilities.GetBackendTranslation(mapStore, "ERROR_INTERNAL", nil, language),
+			},
+			"text/html",
+		), nil
 	}
 
 	acaGoUtilities.PrintMilestone(mapStore, "db saving / update user")
@@ -173,12 +184,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 
 	// return success
-	return events.APIGatewayProxyResponse{
-		// IsBase64Encoded: false,
-		Headers:    map[string]string{"Content-Type": "text/html"},
-		StatusCode: http.StatusOK,
-		Body:       body,
-	}, nil
+	return acaGoMongoDBAWSUtilities.DoResponse(
+		map[string]interface{}{
+			"statusCode": http.StatusOK,
+			"body":       body,
+		},
+		"text/html",
+	), nil
 
 }
 

@@ -45,10 +45,10 @@ import (
 )
 
 // stage, bearer token, post and get parameters
-func DoInit(mapStore map[string]interface{}, request events.APIGatewayProxyRequest, requireParameters bool) (bool, events.APIGatewayProxyResponse) {
+func DoInit(mapStore map[string]interface{}, request events.APIGatewayProxyRequest, requireParameters bool) (bool, map[string]interface{}) {
 	var err error
 	hasError := false
-	response := events.APIGatewayProxyResponse{}
+	response := make(map[string]interface{})
 
 	log.Println("FunctionName, FunctionVersion:", os.Getenv("AWS_LAMBDA_FUNCTION_NAME"), os.Getenv("AWS_LAMBDA_FUNCTION_VERSION"))
 
@@ -81,17 +81,17 @@ func DoInit(mapStore map[string]interface{}, request events.APIGatewayProxyReque
 		err = json.Unmarshal([]byte(request.Body), &t)
 		if requireParameters && err != nil {
 			hasError = true
-			response = events.APIGatewayProxyResponse{
-				StatusCode: http.StatusBadRequest,
-				Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_PARAMETERS_REQUIRED", nil),
+			response = map[string]interface{}{
+				"statusCode": http.StatusBadRequest,
+				"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_PARAMETERS_REQUIRED", nil),
 			}
 		}
 	} else {
 		if requireParameters {
 			hasError = true
-			response = events.APIGatewayProxyResponse{
-				StatusCode: http.StatusBadRequest,
-				Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_PARAMETERS_REQUIRED", nil),
+			response = map[string]interface{}{
+				"statusCode": http.StatusBadRequest,
+				"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_PARAMETERS_REQUIRED", nil),
 			}
 		}
 	}
@@ -103,18 +103,18 @@ func DoInit(mapStore map[string]interface{}, request events.APIGatewayProxyReque
 	// DoInit
 }
 
-func DoCheckJwt(mapStore map[string]interface{}) (bool, events.APIGatewayProxyResponse) {
+func DoCheckJwt(mapStore map[string]interface{}) (bool, map[string]interface{}) {
 	var err error
 	hasError := false
-	response := events.APIGatewayProxyResponse{}
+	response := make(map[string]interface{})
 
 	tokenString := mapStore["tokenString"].(string)
 
 	// check tokenString
 	if tokenString == "" {
-		return true, events.APIGatewayProxyResponse{
-			StatusCode: http.StatusBadRequest,
-			Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_JWT_REQUIRED", nil),
+		return true, map[string]interface{}{
+			"statusCode": http.StatusBadRequest,
+			"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_JWT_REQUIRED", nil),
 		}
 	}
 
@@ -137,9 +137,9 @@ func DoCheckJwt(mapStore map[string]interface{}) (bool, events.APIGatewayProxyRe
 		// log.Println(token)
 
 		if token.Header["alg"].(string) != "HS256" {
-			return true, events.APIGatewayProxyResponse{
-				StatusCode: http.StatusBadRequest,
-				Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_JWT_INVALID_SIGNING_METHOD", map[string]string{"alg": token.Header["alg"].(string)}),
+			return true, map[string]interface{}{
+				"statusCode": http.StatusBadRequest,
+				"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_JWT_INVALID_SIGNING_METHOD", map[string]string{"alg": token.Header["alg"].(string)}),
 			}
 		}
 
@@ -149,35 +149,35 @@ func DoCheckJwt(mapStore map[string]interface{}) (bool, events.APIGatewayProxyRe
 
 		// check expiry
 		if time.Now().Unix() > exp {
-			return true, events.APIGatewayProxyResponse{
-				StatusCode: http.StatusBadRequest,
-				Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_JWT_EXPIRED", nil),
+			return true, map[string]interface{}{
+				"statusCode": http.StatusBadRequest,
+				"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_JWT_EXPIRED", nil),
 			}
 		}
 
 		// check bson ids
 		userId, err = primitive.ObjectIDFromHex(userIdString)
 		if err != nil {
-			return true, events.APIGatewayProxyResponse{
-				StatusCode: http.StatusBadRequest,
-				Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_BAD_REQUEST", nil),
+			return true, map[string]interface{}{
+				"statusCode": http.StatusBadRequest,
+				"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_BAD_REQUEST", nil),
 			}
 		}
 
 		loginLogId, err = primitive.ObjectIDFromHex(loginLogIdString)
 		if err != nil {
-			return true, events.APIGatewayProxyResponse{
-				StatusCode: http.StatusBadRequest,
-				Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_BAD_REQUEST", nil),
+			return true, map[string]interface{}{
+				"statusCode": http.StatusBadRequest,
+				"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_BAD_REQUEST", nil),
 			}
 		}
 
 	} else {
 		log.Println("ERROR", err)
 
-		return true, events.APIGatewayProxyResponse{
-			StatusCode: http.StatusBadRequest,
-			Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_JWT_INVALID", nil),
+		return true, map[string]interface{}{
+			"statusCode": http.StatusBadRequest,
+			"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_JWT_INVALID", nil),
 		}
 	}
 
@@ -192,9 +192,9 @@ func DoCheckJwt(mapStore map[string]interface{}) (bool, events.APIGatewayProxyRe
 	var userObj acaGoMongoDBModels.User
 	err = userCol.FindOne(ctx, f1).Decode(&userObj)
 	if err != nil { // user not found
-		return true, events.APIGatewayProxyResponse{
-			StatusCode: http.StatusNotFound,
-			Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_USER_NOT_FOUND", nil),
+		return true, map[string]interface{}{
+			"statusCode": http.StatusNotFound,
+			"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_USER_NOT_FOUND", nil),
 		}
 	}
 	mapStore["userObj"] = userObj
@@ -203,18 +203,18 @@ func DoCheckJwt(mapStore map[string]interface{}) (bool, events.APIGatewayProxyRe
 	var loginLogObj acaGoMongoDBModels.LoginLog
 	err = loginLogCol.FindOne(ctx, f2).Decode(&loginLogObj)
 	if err != nil { // login log not found
-		return true, events.APIGatewayProxyResponse{
-			StatusCode: http.StatusNotFound,
-			Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_LOGIN_LOG_NOT_FOUND", nil),
+		return true, map[string]interface{}{
+			"statusCode": http.StatusNotFound,
+			"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_LOGIN_LOG_NOT_FOUND", nil),
 		}
 	}
 	mapStore["loginLogObj"] = loginLogObj
 
 	// check if isblocked
 	if userObj.IsBlocked {
-		return true, events.APIGatewayProxyResponse{
-			StatusCode: http.StatusBadRequest,
-			Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_USER_IS_BLOCKED", nil),
+		return true, map[string]interface{}{
+			"statusCode": http.StatusBadRequest,
+			"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_USER_IS_BLOCKED", nil),
 		}
 	}
 
@@ -393,4 +393,21 @@ func DoEmail(mapStore map[string]interface{}, userObj acaGoMongoDBModels.User, e
 	}
 
 	// DoEmail
+}
+
+func DoResponse(response map[string]interface{}, ct string) events.APIGatewayProxyResponse {
+	AWSresponse := events.APIGatewayProxyResponse{
+		StatusCode: response["statusCode"].(int),
+		Body:       response["body"].(string),
+	}
+
+	if ct == "" {
+		ct = "application/json"
+	}
+
+	AWSresponse.Headers = map[string]string{"Content-Type": ct}
+
+	return AWSresponse
+
+	// DoResponse
 }

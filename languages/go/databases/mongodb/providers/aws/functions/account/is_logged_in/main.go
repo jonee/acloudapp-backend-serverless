@@ -51,7 +51,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	hasError, response := acaGoMongoDBAWSUtilities.DoInit(mapStore, request, false)
 	if hasError {
-		return response, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(response, ""), nil
 	}
 
 	acaGoUtilities.PrintMilestone(mapStore, "do init")
@@ -64,7 +64,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	hasError, response = acaGoMongoDBAWSUtilities.DoCheckJwt(mapStore)
 	if hasError {
-		return response, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(response, ""), nil
 	}
 
 	acaGoUtilities.PrintMilestone(mapStore, "jwt")
@@ -81,11 +81,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	log.Println("function exec", (time.Now().UnixNano()-t1.UnixNano())/int64(time.Millisecond))
 
 	// return success
-	return events.APIGatewayProxyResponse{
-		// IsBase64Encoded: false,
-		StatusCode: http.StatusOK,
-		Body:       acaGoUtilities.GetJsonStringBodyReturn(loginLogObj.IsValid, ret),
-	}, nil
+	return acaGoMongoDBAWSUtilities.DoResponse(
+		map[string]interface{}{
+			"statusCode": http.StatusOK,
+			"body":       acaGoUtilities.GetJsonStringBodyReturn(loginLogObj.IsValid, ret),
+		},
+		"",
+	), nil
 
 }
 

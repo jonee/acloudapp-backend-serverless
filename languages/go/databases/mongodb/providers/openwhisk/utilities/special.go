@@ -49,7 +49,7 @@ func DoInit(mapStore map[string]interface{}, requireParameters bool) (bool, map[
 	hasError := false
 	response := make(map[string]interface{})
 
-	// log.Println(os.Args) // log goes to stderr
+	// log.Println(os.Args) // log goes to stderr for openwhisk ?
 
 	arg := os.Args[1]
 	// unmarshal the string to a JSON object

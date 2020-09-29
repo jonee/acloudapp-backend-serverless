@@ -55,7 +55,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	hasError, response := acaGoMongoDBAWSUtilities.DoInit(mapStore, request, true)
 	if hasError {
-		return response, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(response, ""), nil
 	}
 
 	acaGoUtilities.PrintMilestone(mapStore, "do init")
@@ -106,6 +106,9 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 
 	// validate email
+	email = strings.TrimSpace(email)
+	// email = strings.Replace(email, " ", "+", -1) // since openwhisk changes + to space for parameters, we assume that a space in the middle is a +
+
 	emailErrors := make([]map[string]interface{}, 0)
 
 	if email == "" {
@@ -152,10 +155,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 
 	if hasError {
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusBadRequest,
-			Body:       acaGoUtilities.GetFormErrorsJsonStringBodyReturn(false, "ERROR_VALIDATION", formErrors),
-		}, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(
+			map[string]interface{}{
+				"statusCode": http.StatusBadRequest,
+				"body":       acaGoUtilities.GetFormErrorsJsonStringBodyReturn(false, "ERROR_VALIDATION", formErrors),
+			},
+			"",
+		), nil
 	}
 
 	if language == "" {
@@ -205,10 +211,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 			log.Println("hmm possible error 1")
 		}
 
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusBadRequest,
-			Body:       acaGoUtilities.GetFormErrorsJsonStringBodyReturn(false, "ERROR_VALIDATION", formErrors),
-		}, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(
+			map[string]interface{}{
+				"statusCode": http.StatusBadRequest,
+				"body":       acaGoUtilities.GetFormErrorsJsonStringBodyReturn(false, "ERROR_VALIDATION", formErrors),
+			},
+			"",
+		), nil
 	}
 
 	acaGoUtilities.PrintMilestone(mapStore, "user db duplicates check")
@@ -244,10 +253,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 		log.Println("likely database down")
 
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_INTERNAL", nil),
-		}, nil
+		return acaGoMongoDBAWSUtilities.DoResponse(
+			map[string]interface{}{
+				"statusCode": http.StatusInternalServerError,
+				"body":       acaGoUtilities.GetSimpleJsonStringBodyReturn(false, "ERROR_INTERNAL", nil),
+			},
+			"",
+		), nil
 	}
 
 	acaGoUtilities.PrintMilestone(mapStore, "db saving / create user")
@@ -269,11 +281,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	log.Println("function exec", (time.Now().UnixNano()-t1.UnixNano())/int64(time.Millisecond))
 
 	// return success
-	return events.APIGatewayProxyResponse{
-		// IsBase64Encoded: false,
-		StatusCode: http.StatusOK,
-		Body:       acaGoUtilities.GetJsonStringBodyReturn(true, userObj.ExportArrayPublic()),
-	}, nil
+	return acaGoMongoDBAWSUtilities.DoResponse(
+		map[string]interface{}{
+			"statusCode": http.StatusOK,
+			"body":       acaGoUtilities.GetJsonStringBodyReturn(true, userObj.ExportArrayPublic()),
+		},
+		"",
+	), nil
 
 }
 
