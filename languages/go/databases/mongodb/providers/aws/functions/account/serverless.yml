@@ -1,4 +1,4 @@
-service: ACA-account # module or controller
+service: ACA-g-account # module or controller
 
 # frameworkVersion: '>=1.28.0 <2.0.0'
 

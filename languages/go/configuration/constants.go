@@ -14,8 +14,9 @@ const (
 	// USERNAME_MAX_LENGTH      = 12
 	USERNAME_MIN_LENGTH = 4
 
-	REGEX_USERNAME_CLIENT = "^@[-0-9a-zA-Z\\_]*$" // client side starts with @, server side does not
-	REGEX_USERNAME_SERVER = "^[-0-9a-zA-Z\\_]*$"  // client side starts with @, server side does not
+	// REGEX_USERNAME_CLIENT = "^@[-0-9a-zA-Z\\_]*$" // client side starts with @, server side does not
+	REGEX_USERNAME_CLIENT = "^[-0-9a-zA-Z\\_]*$" // letters, numbers and underscore only
+	REGEX_USERNAME_SERVER = "^[-0-9a-zA-Z\\_]*$"
 
 	REGEX_EMAIL = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
 	// REGEX_EMAIL = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]"
