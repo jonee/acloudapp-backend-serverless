@@ -1,0 +1,10 @@
+{
+  "name": "ACA-r-test",
+  "version": "0.1.0",
+  "description": "",
+  "author": "Jonee Ryan Ty",
+  "license": "GPLv3",
+  "dependencies": {
+    "serverless-openwhisk": ">=0.13.0"
+  }
+}

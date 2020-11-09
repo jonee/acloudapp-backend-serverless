@@ -1,0 +1,19 @@
+// Created by Jonee Ryan Ty
+// Copyright ACloudApp
+
+/**
+ * (Secret) Configuration
+ */
+
+	// EMAIL_SMTP_FROM_ACCOUNT : "acloudapporg@gmail.com",
+	// EMAIL_SMTP_FROM_PASSWORD: "",
+	// EMAIL_SMTP_SERVER  : "smtp.gmail.com",
+	// EMAIL_SMTP_PORT    : 587,
+
+pub const AWS_REGION:&str = "us-east-1"; // for ses and s3 upload
+pub const AWS_ACCESS_KEY_ID:&str = "XXXXXXXXXXXXXXXXXXXX"; // for ses and s3 upload
+pub const AWS_SECRET_ACCESS_KEY:&str = "XXXXXXXXXXXXXXXXXXXXXXXXXX"; // for ses and s3 upload
+// pub const  AWS_S3_BUCKET:&str = "acloudapp"; // for s3 upload 
+pub const EMAIL_FROM_ACCOUNT:&str = "acloudapporg@gmail.com"; // amazon ses
+
+pub const JWT_SECRET_STRING:&str = "asdfsafsfsdfsdfds12334543543"; // should be the same as other backend codes
