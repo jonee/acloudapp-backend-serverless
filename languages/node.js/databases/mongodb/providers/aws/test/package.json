@@ -1,13 +1,13 @@
 {
-  "name": "test",
+  "name": "ACA-n-test",
   "version": "0.1.0",
   "description": "",
+  "author": "Jonee Ryan Ty",
+  "license": "GPLv3",
   "dependencies": {
     "bluebird": "^3.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.5",
     "validator": "^7.0.0"
-  },
-  "author": "Jonee Ryan Ty",
-  "license": "GPLv3"
+  }
 }

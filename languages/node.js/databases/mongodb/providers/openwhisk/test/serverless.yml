@@ -3,8 +3,8 @@ service: ACA-n-test # NOTE: update this with your service name
 provider:
   name: openwhisk
   # runtime: nodejs
+  # memorySize: 128
   # stage: api # ignored by openwhisk, we attach the stage ie dev or prod in the path
-  # region: us-east-1
 
 package:
   exclude:

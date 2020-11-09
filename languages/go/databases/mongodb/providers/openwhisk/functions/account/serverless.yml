@@ -5,14 +5,18 @@ service: ACA-g-account # module or controller
 provider:
   name: openwhisk
   runtime: binary
+  # memorySize: 128
   # stage: api # ignored by openwhisk, we attach the stage ie dev or prod in the path
-  # region: us-east-1
 
 package:
   exclude:
     - ./**
   include:
     - ./bin/**
+
+# remember to run npm install to download the provider plugin.
+plugins:
+    - serverless-openwhisk
 
 functions:
   account_email_validation:
@@ -92,7 +96,3 @@ functions:
           path: prod/account/resend_email_validation
           method: post
           resp: http
-
-# remember to run npm install to download the provider plugin.
-plugins:
-    - serverless-openwhisk

@@ -5,6 +5,7 @@ service: ACA-g-account # module or controller
 provider:
   name: aws
   runtime: go1.x
+  # memorySize: 128
   stage: api # we attach the stage ie dev or prod in the path
   region: us-east-1
 

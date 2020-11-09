@@ -3,6 +3,7 @@ service: ACA-n-test # NOTE: update this with your service name
 provider:
   name: aws
   runtime: nodejs12.x
+  # memorySize: 128
   stage: api # we attach the stage ie dev or prod in the path
   region: us-east-1
 

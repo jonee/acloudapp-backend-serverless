@@ -4,9 +4,9 @@
 // test.js
 'use strict';
 
-const acaNodejsConfiguration = require('../../../../../configuration/configuration');
-const acaNodejsConstants = require('../../../../../configuration/constants');
-const acaNodejsMongoDBConfiguration = require('../../../configuration/configuration');
+const acaNodejsConfiguration = require('../../../../../../node.js/configuration/configuration');
+const acaNodejsConstants = require('../../../../../../node.js/configuration/constants');
+const acaNodejsMongoDBConfiguration = require('../../../../../../node.js/databases/mongodb/configuration/configuration');
 
 const jwt = require("jsonwebtoken");
 

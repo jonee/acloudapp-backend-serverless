@@ -6,3 +6,6 @@ node_modules
 
 configuration.go
 configuration.js
+configuration.rs
+
+target
