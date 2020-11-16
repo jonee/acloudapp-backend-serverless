@@ -213,7 +213,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		userObj.PasswordSalt = acaGoUtilities.GetRandomString(8, "")
 	}
 
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userObj.PasswordSalt+temporaryPassword), bcrypt.DefaultCost)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(acaGoConfiguration.STATIC_SALT+userObj.PasswordSalt+temporaryPassword), bcrypt.DefaultCost)
 	userObj.PasswordTemporaryHash = string(hashedPassword)
 	if userObj.PasswordHash == "" {
 		userObj.PasswordHash = userObj.PasswordTemporaryHash

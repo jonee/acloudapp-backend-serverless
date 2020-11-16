@@ -20,4 +20,5 @@ const (
 	EMAIL_FROM_ACCOUNT = "acloudapporg@gmail.com" // amazon ses
 
 	JWT_SECRET_STRING = "asdfsafsfsdfsdfds12334543543" // should be the same as other backend codes
+	STATIC_SALT = "somesalttomakepasswordharder"
 )

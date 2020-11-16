@@ -223,7 +223,7 @@ func main() {
 
 	// password
 	userObj.PasswordSalt = acaGoUtilities.GetRandomString(8, "")
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userObj.PasswordSalt+password), bcrypt.DefaultCost)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(acaGoConfiguration.STATIC_SALT+userObj.PasswordSalt+password), bcrypt.DefaultCost)
 	if err != nil {
 		log.Println("ERROR", err)
 	}

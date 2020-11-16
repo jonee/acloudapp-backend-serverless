@@ -255,7 +255,7 @@ func main() {
 
 	// check if password or temporary password matched
 	// compare it with regular password hash
-	err = bcrypt.CompareHashAndPassword([]byte(userObj.PasswordHash), []byte(userObj.PasswordSalt+password))
+	err = bcrypt.CompareHashAndPassword([]byte(userObj.PasswordHash), []byte(acaGoConfiguration.STATIC_SALT+userObj.PasswordSalt+password))
 	log.Println("result 1", err)
 
 	if err == nil {
@@ -263,7 +263,7 @@ func main() {
 
 	} else {
 		// compare to passwordtemporaryhash
-		err = bcrypt.CompareHashAndPassword([]byte(userObj.PasswordTemporaryHash), []byte(userObj.PasswordSalt+password))
+		err = bcrypt.CompareHashAndPassword([]byte(userObj.PasswordTemporaryHash), []byte(acaGoConfiguration.STATIC_SALT+userObj.PasswordSalt+password))
 		log.Println("result 2", err)
 		if err == nil {
 			if userObj.PasswordTemporaryExpiry.After(time.Now()) {
