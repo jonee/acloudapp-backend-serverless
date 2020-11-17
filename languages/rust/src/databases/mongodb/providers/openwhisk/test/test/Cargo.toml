@@ -8,3 +8,4 @@ authors = ["jonee"]
 tokio = { version = "0.2", features = ["macros"] }
 lambda_http = { git = "https://github.com/awslabs/aws-lambda-rust-runtime/", branch = "master"}
 serde_json = "1.0"
+rustc-serialize = "0.3"
